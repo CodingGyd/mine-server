@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.codinggyd.mapper.ArticleMapper">
+	<resultMap id="articles" type="com.codinggyd.bean.Article">
+		<id column="id" property="id" />
+		<result column="title" property="title" />
+		<result column="descs" property="descs" />
+		<result column="updatetime" property="updatetime" />
+		<result column="readingcount" property="readingcount" />
+		<result column="url" property="url" />
+		<result column="type" property="type" />
+		<result column="praisecount" property="praisecount"/>
+	</resultMap>
+
+	<select id="findArticle" resultMap="articles">
+	<if test="label != null">
+		with TEMP as  (
+			SELECT DISTINCT articleId FROM mine_article_keyword_relation
+			WHERE keyId=#{label}
+		)
+	</if>
+ 		SELECT 	A.id,title,descs,A.updatetime,A.readingcount,A.url,A.praisecount,type,B.ms typeName
+ 				FROM mine_articles A 
+ 				INNER JOIN mine_sysconst B 
+ 				ON A.type = B.dm AND B.lb = '100' 
+ 				<if test="type != null and type != ''">
+ 					AND B.dm = #{type}
+ 				</if>
+ 				<if test="label != null">
+ 					 INNER JOIN TEMP   ON A.id = TEMP.articleId
+ 				</if>
+				ORDER BY A.updatetime DESC
+	</select>
+
+	<select id="findDetailById" resultType="com.codinggyd.bean.Article">
+		SELECT A.id,title,descs,A.updatetime,A.readingcount,A.url,A.praisecount,type,B.ms typeName,htmlContent,content FROM mine_articles A
+		INNER JOIN mine_sysconst B 
+ 				ON A.type = B.dm AND B.lb = '100' 
+		WHERE A.id = #{id}
+	</select>
+	
+		<select id="findLatestArticle" resultMap="articles">
+ 		SELECT 	A.id,title,descs,A.updatetime,A.readingcount,A.url,A.praisecount,type,B.ms typeName
+ 				FROM mine_articles A 
+ 				INNER JOIN mine_sysconst B 
+ 				ON A.type = B.dm AND B.lb = '100' 
+ 				ORDER BY A.updatetime DESC
+ 				LIMIT #{top}
+	</select>
+	
+	<select id="findArticlelByTitle" resultMap="articles">
+ 		SELECT 	A.id,title,descs,A.updatetime,A.readingcount,A.url,A.praisecount,type,B.ms typeName
+ 				FROM mine_articles A 
+ 				INNER JOIN mine_sysconst B 
+ 				ON A.type = B.dm AND B.lb = '100' 
+ 				WHERE 1=1 AND title LIKE #{condition}
+ 				ORDER BY A.updatetime DESC
+	</select>
+	
+	<select id="findRandomArticle" resultMap="articles">
+ 		SELECT 	A.id,title,descs,A.updatetime,A.readingcount,A.praisecount,url,type,B.ms typeName
+ 				FROM mine_articles A 
+ 				INNER JOIN mine_sysconst B 
+ 				ON A.type = B.dm AND B.lb = '100' 
+ 				WHERE A.id IN(
+ 					<foreach collection="ids" item="id" separator=",">
+ 						#{id}
+ 					</foreach>
+ 				)
+ 				ORDER BY A.updatetime DESC
+ 				 
+	</select>
+</mapper>

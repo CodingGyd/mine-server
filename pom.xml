@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.codinggyd</groupId>
+	<artifactId>mine-server</artifactId>
+	<version>0.0.1</version>
+	<packaging>pom</packaging>
+
+	<name>mine-server</name>
+	<!-- <url>http://maven.apache.org</url> -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.3.3.RELEASE</version>
+	</parent>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.version>4.2.3.RELEASE</spring.version>
+		<tomcat.version>8.0.28</tomcat.version>
+		<mybatis.version>1.0.0</mybatis.version>
+		 <mysql.version>8.0.15</mysql.version>
+  		<!--连接低版本mysql服务器时会报CLIENT_PLUGIN_AUTH 错误 	  <mysql.version>8.0.15</mysql.version> -->
+ 		<!-- <mysql.version>5.1.38</mysql.version>   -->
+		<mybatis-paginator>1.2.17</mybatis-paginator>
+		<druid.version>1.0.25</druid.version>
+		<poi.version>3.15</poi.version>
+		<poi-ooxml.version>3.15</poi-ooxml.version>
+		<commons-codec.version>1.10</commons-codec.version>
+		<commons-collections4.version>4.1</commons-collections4.version>
+		<commons-io.version>2.4</commons-io.version>
+		<commons-lang3.version>3.4</commons-lang3.version>
+	    <jedis.version>2.7.3</jedis.version>
+	</properties>
+
+	<modules>
+		<module>mine-starter</module>
+		<module>mine-login</module>
+		<module>mine-core</module>
+		<module>mine-articles</module>
+		<module>mine-dailyessays</module>
+		<module>mine-data-export</module>
+		<module>mine-sysconst</module>
+		<module>mine-job</module>
+	<!-- 	<module>common-utils</module> -->
+    <module>mine-siteinfo</module>
+    <module>mine-logger</module>
+  </modules>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.codinggyd</groupId>
+				<artifactId>mine-starter</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.codinggyd</groupId>
+				<artifactId>mine-login</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.codinggyd</groupId>
+				<artifactId>mine-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.codinggyd</groupId>
+				<artifactId>mine-articles</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.codinggyd</groupId>
+				<artifactId>mine-dailyessays</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.codinggyd</groupId>
+				<artifactId>mine-data-export</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.codinggyd</groupId>
+				<artifactId>mine-sysconst</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.codinggyd</groupId>
+				<artifactId>mine-job</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.codinggyd</groupId>
+				<artifactId>mine-siteinfo</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.codinggyd</groupId>
+				<artifactId>mine-logger</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			  <plugin>
+            <!-- 发布插件 -->
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-deploy-plugin</artifactId>
+			 <configuration>
+				<skip>false</skip>
+			</configuration>
+        </plugin>
+		</plugins>
+	</build>
+</project>
